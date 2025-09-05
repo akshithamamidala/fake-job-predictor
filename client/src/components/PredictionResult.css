@@ -1,0 +1,33 @@
+.result {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.result h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.badge-real {
+  background-color: #28a745;
+}
+
+.badge-fake {
+  background-color: #dc3545;
+}
+
+.confidence {
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+
