@@ -40,6 +40,7 @@ if __name__ == '__main__':
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
+import os
 
 app = Flask(__name__)
 CORS(app)  # Allow frontend to connect
@@ -47,7 +48,13 @@ CORS(app)  # Allow frontend to connect
 # Load the trained model
 model = joblib.load('model.joblib')
 
-@app.route('/predict', methods=['POST'])
+# ✅ Root route for testing in browser
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "✅ Flask Fake Job Predictor API is running!"})
+
+# Prediction endpoint
+@app.route("/predict", methods=["POST"])
 def predict():
     data = request.get_json()
 
@@ -68,8 +75,11 @@ def predict():
     prediction = int(proba[1] >= 0.5)
 
     return jsonify({
-        'prediction': prediction,
-        'probability': proba.tolist()
+        "prediction": prediction,
+        "probability": proba.tolist()
     })
 
-# ⚠️ No app.run() here! Gunicorn will handle it
+if __name__ == "__main__":
+    # ✅ Bind to 0.0.0.0 so Render/Heroku can access
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
