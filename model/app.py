@@ -40,7 +40,6 @@ if __name__ == '__main__':
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
-import os
 
 app = Flask(__name__)
 CORS(app)  # Allow frontend to connect
@@ -73,8 +72,4 @@ def predict():
         'probability': proba.tolist()
     })
 
-if __name__ == '__main__':
-    # ✅ Bind to 0.0.0.0 so Render/Heroku can access
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-
+# ⚠️ No app.run() here! Gunicorn will handle it
